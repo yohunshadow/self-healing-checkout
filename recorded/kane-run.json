@@ -1,0 +1,952 @@
+{
+  "meta": {
+    "runId": "2026-11-16T13-36-20-731Z",
+    "verifier": "kane",
+    "verifierLabel": "Kane CLI (real browser)",
+    "fixer": "llm",
+    "fixerLabel": "LLM fixer (OpenAI-compatible API)",
+    "standIn": false,
+    "seed": 5,
+    "plannedBugs": 4,
+    "startedAt": "2026-11-16T13:36:20.733Z",
+    "finishedAt": "2026-11-16T17:48:44.144Z",
+    "summary": {
+      "bugsInjected": 4,
+      "caught": 3,
+      "healed": 4,
+      "fixAttempts": 6,
+      "credits": 471.2
+    }
+  },
+  "events": [
+    {
+      "n": 1,
+      "t": "2026-11-16T13:36:20.749Z",
+      "type": "baseline_start",
+      "cycle": 0
+    },
+    {
+      "n": 2,
+      "t": "2026-11-16T13:36:20.925Z",
+      "type": "verify_start",
+      "cycle": 0,
+      "label": "baseline",
+      "verifier": "kane"
+    },
+    {
+      "n": 3,
+      "t": "2026-11-16T13:36:20.926Z",
+      "type": "flow_start",
+      "cycle": 0,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 4,
+      "t": "2026-11-16T13:38:18.211Z",
+      "type": "flow_end",
+      "cycle": 0,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "Added two Ceramic Mugs and one Canvas Tote to the cart as requested.\nOpened the cart and confirmed the totals: subtotal $42.50, shipping $5.00, tax $4.25, and order total $51.75.\nProceeded to checkout, entered Ada Lovelace’s shipping, contact, and card details, and placed the order.\nThe order was completed successfully; the confirmation thanked the customer, included an order number, and showed an amount charged of $51.75.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7J95E9HAJRM4Q1ECQQ832SH/dashboard/share/US_DFOB55ZD313K4WVADYPY158YTAIK7NV96GSQJ5M5WY6QIP0FHZ7X7543M11NOGOO?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 29.2435875,
+      "durationMs": 116462
+    },
+    {
+      "n": 5,
+      "t": "2026-11-16T13:38:18.212Z",
+      "type": "flow_start",
+      "cycle": 0,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 6,
+      "t": "2026-11-16T13:39:50.892Z",
+      "type": "flow_end",
+      "cycle": 0,
+      "flow": "validation",
+      "ok": true,
+      "summary": "Added the Sticker Pack to the cart once, opened the cart, and proceeded to checkout.\nEntered the requested checkout details, including the invalid email address “not-an-email,” then submitted the order.\nThe checkout page remained open and showed “Please enter a valid email address.” next to the Email field; no order confirmation was shown.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7J9901ET5VWZ4KMMP6GDZX0/dashboard/share/US_TCR7KPSYFWH8DW0VEFWL1WTGZD35J6FT1OBUYSZ04MUJ06ZU7RT1GI0EPR337VWW?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 24.512384999999995,
+      "durationMs": 92120
+    },
+    {
+      "n": 7,
+      "t": "2026-11-16T13:39:50.892Z",
+      "type": "flow_start",
+      "cycle": 0,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 8,
+      "t": "2026-11-16T13:41:07.806Z",
+      "type": "flow_end",
+      "cycle": 0,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "Added one Canvas Tote to the cart, opened the cart, and proceeded to checkout.\nEntered the requested customer, shipping, and payment details.\nScrolled to and selected Place order.\nThe order was completed successfully, with a confirmation showing “Thank you for your order!” and an amount charged of $25.35.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7J9BTMSRCN84QA8S99NFH2E/dashboard/share/US_SVEMPJJ1EGBM3OFAW2LJJSGVJ77D8C4KEXKVZ7XEISUU55B4LN2VKE58G4A87JU8?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 22.321444999999997,
+      "durationMs": 76362
+    },
+    {
+      "n": 9,
+      "t": "2026-11-16T13:41:07.807Z",
+      "type": "verify_result",
+      "cycle": 0,
+      "label": "baseline",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 10,
+      "t": "2026-11-16T13:41:07.808Z",
+      "type": "baseline_green",
+      "cycle": 0
+    },
+    {
+      "n": 11,
+      "t": "2026-11-16T13:41:07.809Z",
+      "type": "bug_injected",
+      "cycle": 1,
+      "bugId": "email-accepts-anything",
+      "category": "validation regression",
+      "title": "Email validation accepts any string",
+      "file": "lib/validate.js",
+      "diff": "--- a/lib/validate.js\n+++ b/lib/validate.js\n@@ line 6 @@\n  })(typeof self !== 'undefined' ? self : this, function () {\n-   const EMAIL_RE = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;\n+   const EMAIL_RE = /.*/;"
+    },
+    {
+      "n": 12,
+      "t": "2026-11-16T13:41:07.926Z",
+      "type": "verify_start",
+      "cycle": 1,
+      "label": "after-bug",
+      "verifier": "kane"
+    },
+    {
+      "n": 13,
+      "t": "2026-11-16T13:41:07.926Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 14,
+      "t": "2026-11-16T13:52:16.505Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "Added two Ceramic Mugs and one Canvas Tote to the cart, then opened the cart.\nConfirmed the cart totals: subtotal $42.50, shipping $5.00, tax $4.25, and order total $51.75.\nProceeded to checkout and entered the requested contact, shipping, and card details for Ada Lovelace.\nPlaced the order successfully; the confirmation showed “Thank you for your order!”, order number #1001, and an amount charged of $51.75.",
+      "reason": "AP(text) failed: ",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7J9E5KR46NM9Q4YFS5VYA9W/dashboard/share/US_QWNRD20WA309PT64K5LI26YB1QNHWOSRFNI18V66G8VTNXD05SWVAACDRFY3CNCN?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 28.793644999999998,
+      "durationMs": 668042
+    },
+    {
+      "n": 15,
+      "t": "2026-11-16T13:52:16.506Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 16,
+      "t": "2026-11-16T13:53:36.772Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "validation",
+      "ok": false,
+      "summary": "The checkout form did not stop submission when the Email field contained \"not-an-email\", so it created an order and showed the success confirmation.\nUpdate checkout email validation to show “Please enter a valid email address.” beside Email and keep the customer on the Checkout form without creating an order when the address is invalid.\nevidence: objective_contradiction: type: Type \"not-an-email\" into \"Email\"\nevidence: network_failure: POST http://localhost:35297/api/orders -> 201\nevidence: objective_contradiction: Placing the order showed the prohibited 'Thank you for your order!' confirmation, violating the stated constraint.",
+      "reason": "Placing the order showed the prohibited 'Thank you for your order!' confirmation, violating the stated constraint. | wait: Waiting after placing the order",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JA2JWW6E05ZWVHDF1C8PTX/dashboard/share/US_L5I1AVSAM9QWOHXQX6KIODQPS7ZXUUQRMF4P3FBQJZUBAGIR6O77E22ZLHFM3TMR?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 15.532695000000002,
+      "durationMs": 79639
+    },
+    {
+      "n": 17,
+      "t": "2026-11-16T13:53:36.774Z",
+      "type": "verify_result",
+      "cycle": 1,
+      "label": "after-bug",
+      "ok": false,
+      "failing": [
+        "validation"
+      ]
+    },
+    {
+      "n": 18,
+      "t": "2026-11-16T13:53:36.775Z",
+      "type": "fixer_input",
+      "cycle": 1,
+      "attempt": 1,
+      "failing": [
+        {
+          "flow": "validation",
+          "summary": "The checkout form did not stop submission when the Email field contained \"not-an-email\", so it created an order and showed the success confirmation.\nUpdate checkout email validation to show “Please enter a valid email address.” beside Email and keep the customer on the Checkout form without creating an order when the address is invalid.\nevidence: objective_contradiction: type: Type \"not-an-email\" into \"Email\"\nevidence: network_failure: POST http://localhost:35297/api/orders -> 201\nevidence: objective_contradiction: Placing the order showed the prohibited 'Thank you for your order!' confirmation, violating the stated constraint.",
+          "reason": "Placing the order showed the prohibited 'Thank you for your order!' confirmation, violating the stated constraint. | wait: Waiting after placing the order",
+          "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JA2JWW6E05ZWVHDF1C8PTX/dashboard/share/US_L5I1AVSAM9QWOHXQX6KIODQPS7ZXUUQRMF4P3FBQJZUBAGIR6O77E22ZLHFM3TMR?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    },
+    {
+      "n": 19,
+      "t": "2026-11-16T13:55:09.872Z",
+      "type": "fix_applied",
+      "cycle": 1,
+      "attempt": 1,
+      "explanation": "Update the email validation regular expression in lib/validate.js to reject invalid email addresses such as 'not-an-email'.",
+      "model": "gemini-3.5-flash",
+      "diff": "--- a/lib/validate.js\n+++ b/lib/validate.js\n@@ line 6 @@\n  })(typeof self !== 'undefined' ? self : this, function () {\n-   const EMAIL_RE = /.*/;\n+   const EMAIL_RE = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;",
+      "changed": true
+    },
+    {
+      "n": 20,
+      "t": "2026-11-16T13:55:09.991Z",
+      "type": "verify_start",
+      "cycle": 1,
+      "label": "after-fix-1",
+      "verifier": "kane"
+    },
+    {
+      "n": 21,
+      "t": "2026-11-16T13:55:09.992Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 22,
+      "t": "2026-11-16T14:05:24.482Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "Added two Ceramic Mugs and one Canvas Tote to the cart as requested.\nOpened the cart and confirmed the subtotal was $42.50, shipping was $5.00, tax was $4.25, and the order total was $51.75.\nProceeded to checkout, entered the provided contact, shipping, and card details, and placed the order.\nThe order was successfully confirmed with an order number and an amount charged of $51.75.",
+      "reason": "AP(text) failed: ",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JA7WF36P3W6XQGB4YEN2JG/dashboard/share/US_OUZ5U3NSEAP0Q6MG9IJ5A63DQV6FFSMHVD4JUES3UY9FKCAMYCGXLCTFAP1M6SE7?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 25.9511245,
+      "durationMs": 613834
+    },
+    {
+      "n": 23,
+      "t": "2026-11-16T14:05:24.484Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 24,
+      "t": "2026-11-16T14:07:18.298Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "validation",
+      "ok": true,
+      "summary": "Added the Sticker Pack to the cart once and proceeded to checkout.\nEntered the requested customer, address, and card details, using “not-an-email” as the email address.\nTried to place the order; the checkout form remained open and showed “Please enter a valid email address.” next to the Email field.\nThe order was not submitted, and no “Thank you for your order!” message appeared.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JATMQ07RK7X04090YYM3TW/dashboard/share/US_ONL04WB331NS06TKO4J4S4C3DS4SPF8THS5JEENWNQFIM2GFH4NZZMAYHRJ397QS?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 22.6013375,
+      "durationMs": 112978
+    },
+    {
+      "n": 25,
+      "t": "2026-11-16T14:07:18.299Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 26,
+      "t": "2026-11-16T14:08:37.310Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "You asked to add the Canvas Tote to the cart, complete checkout with the provided contact, address, and card details, and place the order.\nThe Canvas Tote was added to the cart, checkout was opened, and the order form was completed.\nThe order was placed successfully. The confirmation page says “Thank you for your order!” and shows an amount charged of $25.35.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JAY3MPFDZEXQ644Y3SYWD1/dashboard/share/US_MB89Z83I45JHVTRZDL8DHL2UE3PG0K9EW5OUSJZ5A7SULVHZ6H2EVJ8DBWK0IDIZ?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 18.479374,
+      "durationMs": 78354
+    },
+    {
+      "n": 27,
+      "t": "2026-11-16T14:08:37.311Z",
+      "type": "verify_result",
+      "cycle": 1,
+      "label": "after-fix-1",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 28,
+      "t": "2026-11-16T14:08:37.312Z",
+      "type": "healed",
+      "cycle": 1,
+      "bugId": "email-accepts-anything"
+    },
+    {
+      "n": 29,
+      "t": "2026-11-16T14:08:37.313Z",
+      "type": "bug_injected",
+      "cycle": 2,
+      "bugId": "mobile-summary-overlay",
+      "category": "mobile layout bug",
+      "title": "On phones, the order summary is pinned over the Place order button",
+      "file": "public/styles.css",
+      "diff": "--- a/public/styles.css\n+++ b/public/styles.css\n@@ line 26 @@\n    .checkout { grid-template-columns: 1fr; }\n+   .order-summary { position: fixed; left: 0; right: 0; bottom: 0; height: 55vh; z-index: 10; }"
+    },
+    {
+      "n": 30,
+      "t": "2026-11-16T14:08:37.432Z",
+      "type": "verify_start",
+      "cycle": 2,
+      "label": "after-bug",
+      "verifier": "kane"
+    },
+    {
+      "n": 31,
+      "t": "2026-11-16T14:08:37.433Z",
+      "type": "flow_start",
+      "cycle": 2,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 32,
+      "t": "2026-11-16T14:27:30.729Z",
+      "type": "flow_end",
+      "cycle": 2,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "Added two Ceramic Mugs and one Canvas Tote to the cart, then opened the cart.\nConfirmed the cart totals: subtotal $42.50, shipping $5.00, tax $4.25, and order total $51.75.\nProceeded to checkout and entered the requested contact, shipping, and card details.\nPlaced the order successfully. The confirmation thanked the customer, showed order #1001, and confirmed an amount charged of $51.75.",
+      "reason": "AP(text) failed: ",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JB0GSEXC0A06XFVGQD9Q2T/dashboard/share/US_I2Z8JNG3LLFC5P0HS10NFM588LQUX7SLMQUR7JT9KQUDKS25V71HJNKAMLR3UBZB?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 31.700619000000003,
+      "durationMs": 1132711
+    },
+    {
+      "n": 33,
+      "t": "2026-11-16T14:27:30.732Z",
+      "type": "flow_start",
+      "cycle": 2,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 34,
+      "t": "2026-11-16T14:28:45.854Z",
+      "type": "flow_end",
+      "cycle": 2,
+      "flow": "validation",
+      "ok": true,
+      "summary": "Added the Sticker Pack to the cart once and proceeded to checkout.\nEntered the requested checkout details, including the invalid email address not-an-email, and attempted to place the order.\nThe order was not completed because the Email field displayed “Please enter a valid email address.” The checkout form remained visible and no order confirmation was shown.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JC33RVGPHVVPNVK00BM258/dashboard/share/US_KVEY3KJG7VQQTP1OM0BI5TTWE42FKY7U0XO6OPK9WAHZP00LUEM48OAKBXZOAVDW?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 17.068199999999997,
+      "durationMs": 74428
+    },
+    {
+      "n": 35,
+      "t": "2026-11-16T14:28:45.855Z",
+      "type": "flow_start",
+      "cycle": 2,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 36,
+      "t": "2026-11-16T14:30:32.607Z",
+      "type": "flow_end",
+      "cycle": 2,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "Added one Canvas Tote to the cart from the shop home page.\nOpened the cart and proceeded to checkout.\nEntered the provided contact, delivery, and card details, then scrolled to and selected Place order.\nThe order was completed successfully; the confirmation showed “Thank you for your order!” and an amount charged of $25.35.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JC5D0QYPJ1ZDB7ZVZF9GA9/dashboard/share/US_PR5ZX356B47EICDVOYYBOL54JDCTMXF3L58JPBK4QC9NS2YRYI7X5S0MPR2EMP8T?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 21.2212875,
+      "durationMs": 106038
+    },
+    {
+      "n": 37,
+      "t": "2026-11-16T14:30:32.609Z",
+      "type": "verify_result",
+      "cycle": 2,
+      "label": "after-bug",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 38,
+      "t": "2026-11-16T14:30:32.611Z",
+      "type": "healed",
+      "cycle": 2,
+      "bugId": "mobile-summary-overlay"
+    },
+    {
+      "n": 39,
+      "t": "2026-11-16T14:30:32.614Z",
+      "type": "bug_injected",
+      "cycle": 3,
+      "bugId": "place-order-dead",
+      "category": "broken button",
+      "title": "\"Place order\" button stopped submitting the form",
+      "file": "public/checkout.html",
+      "diff": "--- a/public/checkout.html\n+++ b/public/checkout.html\n@@ line 18 @@\n      <p id=\"form-error\" class=\"error\" role=\"alert\"></p>\n-     <button id=\"place-order\" class=\"btn place-order\" type=\"submit\">Place order</button>\n+     <button id=\"place-order\" class=\"btn place-order\" type=\"button\">Place order</button>"
+    },
+    {
+      "n": 40,
+      "t": "2026-11-16T14:30:32.743Z",
+      "type": "verify_start",
+      "cycle": 3,
+      "label": "after-bug",
+      "verifier": "kane"
+    },
+    {
+      "n": 41,
+      "t": "2026-11-16T14:30:32.743Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 42,
+      "t": "2026-11-16T14:42:31.005Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "happy-path",
+      "ok": false,
+      "summary": "The order submission action did not move the customer from the completed checkout form to the order confirmation page.\nInvestigate the Place order submission handler and its success navigation. With this valid form and cart total, it should show the thank-you page, an order number, and the charged amount.\nevidence: objective_contradiction: Valid filled form remained on checkout after two Place order clicks; no confirmation page appeared.",
+      "reason": "Valid filled form remained on checkout after two Place order clicks; no confirmation page appeared. | wait: Waiting after attempting to place the order",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JC8NHQ3GBXXYZ4NZQW5MQH/dashboard/share/US_PI55V4CX641LWEVLCMWLO791N1FKMNFNPLUE0M36ILJR9H8DJRXQHPF9Z8BMSS1W?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 31.58576,
+      "durationMs": 717623
+    },
+    {
+      "n": 43,
+      "t": "2026-11-16T14:42:31.007Z",
+      "type": "verify_result",
+      "cycle": 3,
+      "label": "after-bug",
+      "ok": false,
+      "failing": [
+        "happy-path"
+      ]
+    },
+    {
+      "n": 44,
+      "t": "2026-11-16T14:42:31.008Z",
+      "type": "fixer_input",
+      "cycle": 3,
+      "attempt": 1,
+      "failing": [
+        {
+          "flow": "happy-path",
+          "summary": "The order submission action did not move the customer from the completed checkout form to the order confirmation page.\nInvestigate the Place order submission handler and its success navigation. With this valid form and cart total, it should show the thank-you page, an order number, and the charged amount.\nevidence: objective_contradiction: Valid filled form remained on checkout after two Place order clicks; no confirmation page appeared.",
+          "reason": "Valid filled form remained on checkout after two Place order clicks; no confirmation page appeared. | wait: Waiting after attempting to place the order",
+          "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JC8NHQ3GBXXYZ4NZQW5MQH/dashboard/share/US_PI55V4CX641LWEVLCMWLO791N1FKMNFNPLUE0M36ILJR9H8DJRXQHPF9Z8BMSS1W?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    },
+    {
+      "n": 45,
+      "t": "2026-11-16T14:44:18.200Z",
+      "type": "fix_applied",
+      "cycle": 3,
+      "attempt": 1,
+      "explanation": "Fixer error: fixer LLM failed: gemini-3.5-flash: The operation was aborted due to timeout",
+      "diff": "",
+      "changed": false
+    },
+    {
+      "n": 46,
+      "t": "2026-11-16T14:44:18.324Z",
+      "type": "verify_start",
+      "cycle": 3,
+      "label": "after-fix-1",
+      "verifier": "kane"
+    },
+    {
+      "n": 47,
+      "t": "2026-11-16T14:44:18.325Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 48,
+      "t": "2026-11-16T14:53:51.244Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "happy-path",
+      "ok": false,
+      "summary": "The order submission action did not complete even though all required customer and card details were filled in and the button was available.\nInvestigate the checkout submission handler and its response path. A valid form should create the order and show the confirmation page after one activation.\nevidence: objective_contradiction: Valid populated form and uncovered Place order button remained on checkout after repeated mouse and keyboard activation.\nevidence: objective_contradiction: PRIMARY: press the Enter key to activate the focused Place order button",
+      "reason": "Valid populated form and uncovered Place order button remained on checkout after repeated mouse and keyboard activation. | wait: Waiting after failed checkout submission",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JD1VTFPE383ZWFFX78FPPE/dashboard/share/US_G1UC0L35ZLMDIPKHHQVU1W7P4PZGJY63YSTL3738N4QQ202HN3QJJNOSX0QNCWCG?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 34.754362,
+      "durationMs": 572187
+    },
+    {
+      "n": 49,
+      "t": "2026-11-16T14:53:51.247Z",
+      "type": "verify_result",
+      "cycle": 3,
+      "label": "after-fix-1",
+      "ok": false,
+      "failing": [
+        "happy-path"
+      ]
+    },
+    {
+      "n": 50,
+      "t": "2026-11-16T14:53:51.249Z",
+      "type": "fixer_input",
+      "cycle": 3,
+      "attempt": 2,
+      "failing": [
+        {
+          "flow": "happy-path",
+          "summary": "The order submission action did not complete even though all required customer and card details were filled in and the button was available.\nInvestigate the checkout submission handler and its response path. A valid form should create the order and show the confirmation page after one activation.\nevidence: objective_contradiction: Valid populated form and uncovered Place order button remained on checkout after repeated mouse and keyboard activation.\nevidence: objective_contradiction: PRIMARY: press the Enter key to activate the focused Place order button",
+          "reason": "Valid populated form and uncovered Place order button remained on checkout after repeated mouse and keyboard activation. | wait: Waiting after failed checkout submission",
+          "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JD1VTFPE383ZWFFX78FPPE/dashboard/share/US_G1UC0L35ZLMDIPKHHQVU1W7P4PZGJY63YSTL3738N4QQ202HN3QJJNOSX0QNCWCG?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    },
+    {
+      "n": 51,
+      "t": "2026-11-16T14:55:43.427Z",
+      "type": "fix_applied",
+      "cycle": 3,
+      "attempt": 2,
+      "explanation": "Change the place order button type from 'button' to 'submit' so clicking or activating it triggers the form submission handler.",
+      "model": "gemini-3.5-flash",
+      "diff": "--- a/public/checkout.html\n+++ b/public/checkout.html\n@@ line 18 @@\n      <p id=\"form-error\" class=\"error\" role=\"alert\"></p>\n-     <button id=\"place-order\" class=\"btn place-order\" type=\"button\">Place order</button>\n+     <button id=\"place-order\" class=\"btn place-order\" type=\"submit\">Place order</button>",
+      "changed": true
+    },
+    {
+      "n": 52,
+      "t": "2026-11-16T14:55:43.547Z",
+      "type": "verify_start",
+      "cycle": 3,
+      "label": "after-fix-2",
+      "verifier": "kane"
+    },
+    {
+      "n": 53,
+      "t": "2026-11-16T14:55:43.547Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 54,
+      "t": "2026-11-16T14:57:46.004Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "Added two Ceramic Mugs and one Canvas Tote to the cart, then opened the cart.\nConfirmed the cart totals: subtotal $42.50, shipping $5.00, tax $4.25, and order total $51.75.\nCompleted checkout using the provided customer, delivery, and payment details.\nPlaced the order successfully; the confirmation shows order #1001 and an amount charged of $51.75.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JDPRVZDYR9D3GWJRH9HMBB/dashboard/share/US_EYLDHOXAORXEQ2SWWP9HLDQN08JQIUAALWBDECT8P6L94YNUG56V24XQ2DWJAILI?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 25.494477000000003,
+      "durationMs": 121774
+    },
+    {
+      "n": 55,
+      "t": "2026-11-16T14:57:46.006Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 56,
+      "t": "2026-11-16T14:59:17.332Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "validation",
+      "ok": true,
+      "summary": "Added the Sticker Pack to the cart once, opened the cart, and proceeded to checkout.\nEntered the requested customer, address, and card details, using the invalid email address “not-an-email.”\nPlaced the order attempt; the checkout form remained open and showed “Please enter a valid email address.” next to the Email field.\nNo order confirmation was shown.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JDTGBS8V2GR4XYSNZ5JFF5/dashboard/share/US_TXL3B8WY2L42ME3I00J4ZWN5ZFZ1ECZ15U3ZFD2T0H19JP4JZ16MEE1IZO7ULCVZ?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 19.072495,
+      "durationMs": 90689
+    },
+    {
+      "n": 57,
+      "t": "2026-11-16T14:59:17.333Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 58,
+      "t": "2026-11-16T15:04:31.443Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "Added the Canvas Tote to the cart, opened the cart, and proceeded to checkout.\nEntered the requested contact, shipping, and card details, then placed the order.\nThe order was completed successfully; the confirmation page says “Thank you for your order!” and shows an amount charged of $25.35.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JE49CTJCAA8F7RHSCHA730/dashboard/share/US_3JHL7D567KCNNAIPX2R1FC70A9ZZ72F7KXDWF49EL139HBWDBKVC957UMK3NQ7NZ?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 22.283715,
+      "durationMs": 313475
+    },
+    {
+      "n": 59,
+      "t": "2026-11-16T15:04:31.447Z",
+      "type": "verify_result",
+      "cycle": 3,
+      "label": "after-fix-2",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 60,
+      "t": "2026-11-16T15:04:31.450Z",
+      "type": "healed",
+      "cycle": 3,
+      "bugId": "place-order-dead"
+    },
+    {
+      "n": 61,
+      "t": "2026-11-16T15:04:31.452Z",
+      "type": "bug_injected",
+      "cycle": 4,
+      "bugId": "total-ignores-quantity",
+      "category": "wrong total",
+      "title": "Subtotal ignores item quantity",
+      "file": "lib/pricing.js",
+      "diff": "--- a/lib/pricing.js\n+++ b/lib/pricing.js\n@@ line 18 @@\n      for (const item of items) {\n-       subtotal += item.price * item.qty;\n+       subtotal += item.price;"
+    },
+    {
+      "n": 62,
+      "t": "2026-11-16T15:04:31.574Z",
+      "type": "verify_start",
+      "cycle": 4,
+      "label": "after-bug",
+      "verifier": "kane"
+    },
+    {
+      "n": 63,
+      "t": "2026-11-16T15:04:31.575Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 64,
+      "t": "2026-11-16T15:25:45.388Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "happy-path",
+      "ok": false,
+      "summary": "The cart's displayed item list correctly shows two Ceramic Mugs and one Canvas Tote, but its price calculation only includes one of the mugs. This makes every amount after the subtotal too low.\nFix the cart pricing calculation so item quantities are multiplied into the subtotal. For two $12.00 mugs and one $18.50 tote, it should show subtotal $42.50, tax $4.25, and order total $51.75.\nevidence: objective_contradiction: Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75.\nevidence: objective_contradiction: The required cart totals checkpoint failed after the Cart page was opened.",
+      "reason": "The required cart totals checkpoint failed after the Cart page was opened. | wait: Waiting after the failed cart totals checkpoint",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JE6WDHPZ22S1FH7NVMN31R/dashboard/share/US_71NEGGN7H1UK437IL3KQZEAKK6FCUSEPAMZ8MPLMCM0PLB3C24Q4412I0CZPOIVO?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 22.478811999999998,
+      "durationMs": 1273084
+    },
+    {
+      "n": 65,
+      "t": "2026-11-16T15:25:45.391Z",
+      "type": "verify_result",
+      "cycle": 4,
+      "label": "after-bug",
+      "ok": false,
+      "failing": [
+        "happy-path"
+      ]
+    },
+    {
+      "n": 66,
+      "t": "2026-11-16T15:25:45.394Z",
+      "type": "fixer_input",
+      "cycle": 4,
+      "attempt": 1,
+      "failing": [
+        {
+          "flow": "happy-path",
+          "summary": "The cart's displayed item list correctly shows two Ceramic Mugs and one Canvas Tote, but its price calculation only includes one of the mugs. This makes every amount after the subtotal too low.\nFix the cart pricing calculation so item quantities are multiplied into the subtotal. For two $12.00 mugs and one $18.50 tote, it should show subtotal $42.50, tax $4.25, and order total $51.75.\nevidence: objective_contradiction: Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75.\nevidence: objective_contradiction: The required cart totals checkpoint failed after the Cart page was opened.",
+          "reason": "The required cart totals checkpoint failed after the Cart page was opened. | wait: Waiting after the failed cart totals checkpoint",
+          "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JE6WDHPZ22S1FH7NVMN31R/dashboard/share/US_71NEGGN7H1UK437IL3KQZEAKK6FCUSEPAMZ8MPLMCM0PLB3C24Q4412I0CZPOIVO?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    },
+    {
+      "n": 67,
+      "t": "2026-11-16T15:29:27.949Z",
+      "type": "fix_applied",
+      "cycle": 4,
+      "attempt": 1,
+      "explanation": "Fixer error: fixer LLM failed: gemini-3.5-flash: HTTP 503 [{ \"error\": { \"code\": 503, \"message\": \"This model is currently experiencing high demand. Spikes in demand are ",
+      "diff": "",
+      "changed": false
+    },
+    {
+      "n": 68,
+      "t": "2026-11-16T15:29:28.083Z",
+      "type": "verify_start",
+      "cycle": 4,
+      "label": "after-fix-1",
+      "verifier": "kane"
+    },
+    {
+      "n": 69,
+      "t": "2026-11-16T15:29:28.084Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 70,
+      "t": "2026-11-16T16:13:02.025Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "happy-path",
+      "ok": false,
+      "summary": "The cart shows two Ceramic Mugs and one Canvas Tote, but its displayed subtotal is only $30.50 instead of the $42.50 value of those listed items. Shipping is correct, while tax and the order total are then calculated from the incorrect subtotal.\nFix the cart total calculation so every listed line item, including the Canvas Tote, is included before tax and the final order total are calculated.\nevidence: objective_contradiction: the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75\nevidence: objective_contradiction: the cart shows Order total $51.75",
+      "reason": "Checkpoint assertion failed: \"the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75\" | assert: the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JFMJ0MD4B4MDAPQERSH5G4/dashboard/share/US_ANWK9S91WWDPCE10MVEQTISPB7APPSKWUOXSVUABTFIP831JBJZP1510J1I0Z3AC?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 23.398942499999997,
+      "durationMs": 2613155
+    },
+    {
+      "n": 71,
+      "t": "2026-11-16T16:13:02.027Z",
+      "type": "verify_result",
+      "cycle": 4,
+      "label": "after-fix-1",
+      "ok": false,
+      "failing": [
+        "happy-path"
+      ]
+    },
+    {
+      "n": 72,
+      "t": "2026-11-16T16:13:02.028Z",
+      "type": "fixer_input",
+      "cycle": 4,
+      "attempt": 2,
+      "failing": [
+        {
+          "flow": "happy-path",
+          "summary": "The cart shows two Ceramic Mugs and one Canvas Tote, but its displayed subtotal is only $30.50 instead of the $42.50 value of those listed items. Shipping is correct, while tax and the order total are then calculated from the incorrect subtotal.\nFix the cart total calculation so every listed line item, including the Canvas Tote, is included before tax and the final order total are calculated.\nevidence: objective_contradiction: the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75\nevidence: objective_contradiction: the cart shows Order total $51.75",
+          "reason": "Checkpoint assertion failed: \"the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75\" | assert: the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75",
+          "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JFMJ0MD4B4MDAPQERSH5G4/dashboard/share/US_ANWK9S91WWDPCE10MVEQTISPB7APPSKWUOXSVUABTFIP831JBJZP1510J1I0Z3AC?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    },
+    {
+      "n": 73,
+      "t": "2026-11-16T16:44:48.621Z",
+      "type": "fix_applied",
+      "cycle": 4,
+      "attempt": 2,
+      "explanation": "Fixer error: The operation was aborted due to timeout",
+      "diff": "",
+      "changed": false
+    },
+    {
+      "n": 74,
+      "t": "2026-11-16T16:44:48.775Z",
+      "type": "verify_start",
+      "cycle": 4,
+      "label": "after-fix-2",
+      "verifier": "kane"
+    },
+    {
+      "n": 75,
+      "t": "2026-11-16T16:44:48.776Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 76,
+      "t": "2026-11-16T16:51:01.031Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "happy-path",
+      "ok": false,
+      "summary": "The cart is charging for the items incorrectly after the requested quantities are added. Two mugs at $12.00 plus one tote at $18.50 should make a $42.50 subtotal, but the displayed subtotal is $30.50.\nCheck the cart pricing calculation so it adds each item's price multiplied by its quantity, then calculates tax from the corrected subtotal.\nevidence: objective_contradiction: Checkpoint assertion failed: \"the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75.\"",
+      "reason": "Checkpoint assertion failed: \"the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75.\" | assert: the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JKYGW6RARK66T1DWN84JGH/dashboard/share/US_EOZMVEIEDDHRBI0CLRPNVBI71MZCKWSQY6N5WSG5XERNM63HSXO8MWAXMUGZOVNX?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 24.61347,
+      "durationMs": 371452
+    },
+    {
+      "n": 77,
+      "t": "2026-11-16T16:51:01.034Z",
+      "type": "verify_result",
+      "cycle": 4,
+      "label": "after-fix-2",
+      "ok": false,
+      "failing": [
+        "happy-path"
+      ]
+    },
+    {
+      "n": 78,
+      "t": "2026-11-16T16:51:01.036Z",
+      "type": "fixer_input",
+      "cycle": 4,
+      "attempt": 3,
+      "failing": [
+        {
+          "flow": "happy-path",
+          "summary": "The cart is charging for the items incorrectly after the requested quantities are added. Two mugs at $12.00 plus one tote at $18.50 should make a $42.50 subtotal, but the displayed subtotal is $30.50.\nCheck the cart pricing calculation so it adds each item's price multiplied by its quantity, then calculates tax from the corrected subtotal.\nevidence: objective_contradiction: Checkpoint assertion failed: \"the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75.\"",
+          "reason": "Checkpoint assertion failed: \"the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75.\" | assert: the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75",
+          "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JKYGW6RARK66T1DWN84JGH/dashboard/share/US_EOZMVEIEDDHRBI0CLRPNVBI71MZCKWSQY6N5WSG5XERNM63HSXO8MWAXMUGZOVNX?type=summary&agentView=true&fqdn=summary-page"
+        }
+      ]
+    },
+    {
+      "n": 79,
+      "t": "2026-11-16T16:52:06.288Z",
+      "type": "fix_applied",
+      "cycle": 4,
+      "attempt": 3,
+      "explanation": "Fixer error: edit for lib/pricing.js: 'find' text matched 0 times (need exactly 1)",
+      "diff": "--- a/lib/pricing.js\n+++ b/lib/pricing.js\n@@ line 18 @@\n      for (const item of items) {\n-       subtotal += item.price;\n+       subtotal += item.price * item.qty;\n--- a/public/styles.css\n+++ b/public/styles.css\n@@ line 26 @@\n    .checkout { grid-template-columns: 1fr; }\n-   .order-summary { position: fixed; left: 0; right: 0; bottom: 0; height: 55vh; z-index: 10; }",
+      "changed": true
+    },
+    {
+      "n": 80,
+      "t": "2026-11-16T16:52:06.412Z",
+      "type": "verify_start",
+      "cycle": 4,
+      "label": "after-fix-3",
+      "verifier": "kane"
+    },
+    {
+      "n": 81,
+      "t": "2026-11-16T16:52:06.413Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 82,
+      "t": "2026-11-16T16:54:28.926Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "Added two Ceramic Mugs and one Canvas Tote to the cart, as requested.\nOpened the cart and confirmed the subtotal was $42.50, shipping was $5.00, tax was $4.25, and the order total was $51.75.\nProceeded to checkout and entered the provided contact, delivery, and card details.\nPlaced the order successfully; the confirmation page showed a thank-you message, order number 1001, and an amount charged of $51.75.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JMBW8KZJZAZXYEB35M5BYE/dashboard/share/US_RK243SXQF08465VEWF1XDCNSC63ZYF5GSMKH6O0F830CYFRR3OLSA9EP6KMSNHLF?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 31.612707000000004,
+      "durationMs": 141646
+    },
+    {
+      "n": 83,
+      "t": "2026-11-16T16:54:28.927Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 84,
+      "t": "2026-11-16T17:09:35.903Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "validation",
+      "ok": true,
+      "summary": "Added the Sticker Pack to the cart once and proceeded to checkout.\nEntered the requested checkout details, including the invalid email address \"not-an-email\", then selected Place order.\nThe checkout page displayed “Please enter a valid email address.” beside the Email field; the checkout form remained open and no order confirmation was shown.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JMG6WXERRX9J6ZQNCZ3PAE/dashboard/share/US_M2C1EDTN0UJ5MO3JPG65XRSWWDQ4FG0RYISEZOJLLUTKWGQ9OBAB17TP7CDIYI3G?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 27.870785,
+      "durationMs": 906412
+    },
+    {
+      "n": 85,
+      "t": "2026-11-16T17:09:35.907Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 86,
+      "t": "2026-11-16T17:48:44.131Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "Added the Canvas Tote to the cart, opened the cart, and proceeded to checkout.\nEntered the requested contact, delivery, and card details, then placed the order.\nThe order was completed successfully. The confirmation page says “Thank you for your order!” and shows an amount charged of $25.35.",
+      "reason": "Objective completed",
+      "testUrl": "https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JNBWVSG3V3TM22VMYJQ8C4/dashboard/share/US_ZQA5G66Z4N7H01BIYD5RYZ9APPYBV39U6FG7MSJMQSF98IUHCV99NHS3329YHE3A?type=summary&agentView=true&fqdn=summary-page",
+      "credits": 26.666285000000002,
+      "durationMs": 2347582
+    },
+    {
+      "n": 87,
+      "t": "2026-11-16T17:48:44.134Z",
+      "type": "verify_result",
+      "cycle": 4,
+      "label": "after-fix-3",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 88,
+      "t": "2026-11-16T17:48:44.136Z",
+      "type": "healed",
+      "cycle": 4,
+      "bugId": "total-ignores-quantity"
+    },
+    {
+      "n": 89,
+      "t": "2026-11-16T17:48:44.142Z",
+      "type": "run_end",
+      "bugsInjected": 4,
+      "caught": 3,
+      "healed": 4,
+      "fixAttempts": 6,
+      "credits": 471.2
+    }
+  ]
+}

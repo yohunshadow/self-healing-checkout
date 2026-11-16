@@ -73,6 +73,7 @@ async function main() {
   tl.add('baseline_green', { cycle: 0 });
 
   let healed = 0, caught = 0, totalFixAttempts = 0, credits = 0;
+  base.results.forEach((r) => (credits += r.credits || 0));
   for (let i = 0; i < order.length; i++) {
     const m = order[i], cycle = i + 1;
     log(c.bold(`\n● Cycle ${cycle}/${order.length} — breaker injects: `) + c.red(`${m.category}`) + c.dim(` (${m.id})`));

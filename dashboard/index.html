@@ -34,6 +34,7 @@ pre{margin:8px 0 0;background:#0a0d13;border:1px solid var(--line);border-radius
     <div class="stat"><b id="s-caught">0</b><span>caught by verifier</span></div>
     <div class="stat"><b id="s-healed">0</b><span>healed</span></div>
     <div class="stat"><b id="s-runs">0</b><span>verifier runs</span></div>
+    <div class="stat"><b id="s-credits">0</b><span>Kane credits</span></div>
   </div>
 </header>
 <div id="banner"></div><div class="meta" id="meta"></div>
@@ -65,20 +66,24 @@ function render() {
   $('s-caught').textContent = new Set(ev.filter((e) => e.type === 'flow_end' && !e.ok && e.cycle > 0).map((e) => e.cycle)).size;
   $('s-healed').textContent = ev.filter((e) => e.type === 'healed').length;
   $('s-runs').textContent = vr.length;
+  const cred = vr.reduce((s, e) => s + (Number(e.credits) || 0), 0);
+  $('s-credits').textContent = cred ? cred.toFixed(1) : '0';
   let html = '';
   for (const [c, list] of Object.entries(cycles)) {
     const inj = list.find((e) => e.type === 'bug_injected');
     const done = list.some((e) => e.type === 'healed'), bad = list.some((e) => e.type === 'unhealed');
+    const caughtThis = list.some((e) => e.type === 'flow_end' && !e.ok);
+    const missed = inj && done && !caughtThis;
     const title = c === '0' ? 'Baseline — is the shop green before we break it?' : `Cycle ${c} — ${esc(inj?.title || '')}`;
-    const status = c === '0' ? (list.some((e) => e.type === 'baseline_green') ? '<span class="pill grn end">green</span>' : '<span class="run end"></span>') : done ? '<span class="pill grn end">healed</span>' : bad ? '<span class="pill red end">not healed</span>' : '<span class="run end"></span>';
+    const status = c === '0' ? (list.some((e) => e.type === 'baseline_green') ? '<span class="pill grn end">green</span>' : '<span class="run end"></span>') : missed ? '<span class="pill amb end">not caught</span>' : done ? '<span class="pill grn end">healed</span>' : bad ? '<span class="pill red end">not healed</span>' : '<span class="run end"></span>';
     html += `<section class="cycle"><h2>${c === '0' ? '' : `<span class="pill red">${esc(inj?.category || '')}</span>`}${title}${status}</h2>`;
     for (const e of list) {
       if (e.type === 'bug_injected') html += row(e, '💥', 'Breaker injected a bug', `${esc(e.file)}`, diff(e.diff));
       else if (e.type === 'flow_start') html += row(e, '🧪', `${V()} running flow: ${esc(e.flow)}`, esc(e.title));
-      else if (e.type === 'flow_end') html += row(e, e.ok ? '✅' : '❌', `${e.ok ? 'PASS' : 'FAIL'} · ${esc(e.flow)} <span style="color:var(--mut);font-weight:400">(${(e.durationMs / 1000).toFixed(1)}s${e.credits ? ', ' + e.credits + ' credits' : ''})</span>`, esc(e.summary) + (e.testUrl ? ` · <a href="${esc(e.testUrl)}" target="_blank" rel="noreferrer">Kane run ↗</a>` : ''));
+      else if (e.type === 'flow_end') html += row(e, e.ok ? '✅' : '❌', `${e.ok ? 'PASS' : 'FAIL'} · ${esc(e.flow)} <span style="color:var(--mut);font-weight:400">(${(e.durationMs / 1000).toFixed(1)}s${e.credits != null && e.credits !== '' ? ', ' + Number(e.credits).toFixed(1) + ' credits' : ''})</span>`, esc(e.summary) + (e.testUrl ? ` · <a href="${esc(e.testUrl)}" target="_blank" rel="noreferrer">Kane run ↗</a>` : ''));
       else if (e.type === 'fixer_input') html += row(e, '📨', 'Verdict sent to the fixer agent', e.failing.map((f) => esc(f.flow + ': ' + f.summary)).join('<br>'));
-      else if (e.type === 'fix_applied') html += row(e, '🛠️', `Fixer patch (attempt ${e.attempt})`, esc(e.explanation), diff(e.diff) || '<div class="d">No change made.</div>');
-      else if (e.type === 'healed') html += row(e, '💚', 'All flows green again', 'Loop closed.');
+      else if (e.type === 'fix_applied') html += row(e, '🛠️', `Fixer patch (attempt ${e.attempt}${e.model ? ', ' + esc(e.model) : ''})`, esc(e.explanation), diff(e.diff) || '<div class="d">No change made.</div>');
+      else if (e.type === 'healed') html += row(e, missed ? '⚠️' : '💚', missed ? 'After-bug already green — not caught' : 'All flows green again', missed ? 'Kane passed every flow after the injection, so the fixer never ran. The cycle is marked healed because the shop was already green.' : 'Loop closed.');
       else if (e.type === 'unhealed') html += row(e, '🛑', 'Fixer gave up', 'Max attempts reached; shop reset.');
     }
     html += '</section>';

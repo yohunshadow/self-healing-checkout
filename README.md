@@ -29,7 +29,8 @@ npm run demo                                              # → open http://loca
 ```
 
 `npm run demo` starts the dashboard, checks the untouched shop is green (baseline), then runs 3 cycles with
-random bugs. Kane uses ~12 credits per flow run, so a full demo costs roughly 100–300 credits.
+random bugs. In the recorded Kane run below, flows used about 25 credits each (547.3 credits across 22 runs),
+so a shorter 3-bug live demo is typically a few hundred credits.
 
 **Fallback if you can't run Kane / have no credits:** `npm run replay` serves the dashboard on a
 **recorded real Kane run** (`recorded/kane-run.json`, with links to the Kane evidence) at http://localhost:4000/?src=recorded/kane-run.json.
@@ -81,10 +82,42 @@ Each cycle picks a random bug (seeded: `--seed=N`), so the demo differs every ti
 
 `auto` picks `cmd` → `llm` → `heuristic`. The dashboard always shows which one ran.
 
+## Recorded Kane run (16–17 Nov 2026)
+
+`recorded/kane-run.json` is a real Kane CLI run — not the Playwright stand-in. Seed 5, `--bugs=4`.
+Started 16 Nov 2026, 20:36:20 WIB (UTC+7); finished 17 Nov 2026, 00:48:44 WIB. Wall clock 4 h 12 min.
+
+`npm run replay` serves this file by default (falls back to `recorded/standin-run.json` if it is missing)
+at http://localhost:4000/?src=recorded/kane-run.json.
+
+| Cycle | Bug | Caught by | Fix attempts | Model on the patch that landed | Time (inject → cycle end) |
+|---|---|---|---|---|---|
+| 1 | `email-accepts-anything` | `validation` | 1, applied | `gemini-3.5-flash` | 27 min 30 s |
+| 2 | `mobile-summary-overlay` | **not caught** — all 3 flows passed after injection | 0 (fixer never ran) | — | 21 min 55 s (after-bug already green) |
+| 3 | `place-order-dead` | `happy-path` | 2 (1 timeout, no change; 1 applied) | `gemini-3.5-flash` | 33 min 59 s |
+| 4 | `total-ignores-quantity` | `happy-path` | 3 (two failed: HTTP 503 / timeout; the 3rd changed the work tree) | not recorded (fixer threw after a partial apply) | 164 min 13 s |
+
+Totals, taken only from the timeline events:
+
+- 4 bugs injected, **3 caught**, 4 cycles ended green. Cycle 2 is marked `healed` only because the after-bug verify was already green; Kane did not catch that injection.
+- 6 fix attempts, 3 of which actually changed the work tree.
+- 22 Kane flow runs (16 pass, 6 fail).
+- **547.3 Kane credits** is the sum of every `flow_end.credits` value, rounded to one decimal. The run's own `summary.credits` field is 471.2 because the loop originally started counting after baseline; the 3 baseline flows used 76.1 credits. That accounting is fixed in this repo for future runs; the recorded JSON is an unchanged copy of the original timeline.
+- Fixer: the Gemini OpenAI-compatible API. Configured chain: `gemini-3.8-flash` → `gemini-3.7-flash` → `gemini-3.5-flash`. The two patches that record a model were applied by **gemini-3.5-flash**. A second-provider NVIDIA NIM fallback exists in the code but was **not used** in this recorded run (the process had already started on earlier code).
+
+Kane evidence (share links from the timeline):
+
+- [Email bug caught by `validation`](https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JA2JWW6E05ZWVHDF1C8PTX/dashboard/share/US_L5I1AVSAM9QWOHXQX6KIODQPS7ZXUUQRMF4P3FBQJZUBAGIR6O77E22ZLHFM3TMR?type=summary&agentView=true&fqdn=summary-page)
+- [Dead "Place order" button caught by `happy-path`](https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JC8NHQ3GBXXYZ4NZQW5MQH/dashboard/share/US_PI55V4CX641LWEVLCMWLO791N1FKMNFNPLUE0M36ILJR9H8DJRXQHPF9Z8BMSS1W?type=summary&agentView=true&fqdn=summary-page)
+- [Quantity-total bug caught by `happy-path`](https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JE6WDHPZ22S1FH7NVMN31R/dashboard/share/US_71NEGGN7H1UK437IL3KQZEAKK6FCUSEPAMZ8MPLMCM0PLB3C24Q4412I0CZPOIVO?type=summary&agentView=true&fqdn=summary-page)
+- [Final green `mobile-checkout` that closed the run](https://test-manager.lambdatest.com/projects/01M7AV3YP8WCG0N72S5RNYFQWC/test-cases/01M7JNBWVSG3V3TM22VMYJQ8C4/dashboard/share/US_ZQA5G66Z4N7H01BIYD5RYZ9APPYBV39U6FG7MSJMQSF98IUHCV99NHS3329YHE3A?type=summary&agentView=true&fqdn=summary-page)
+
+The work copy is not reset between cycles that end green, so the uncaught mobile overlay stayed in CSS during later cycles. Kane's later `mobile-checkout` runs also passed. The leftover CSS was removed as a side effect of cycle 4's third, partial fix (visible in that event's tree diff).
+
 ## Dashboard
 
-`http://localhost:4000` — stats, and one card per cycle: the injected diff, each Kane flow (pass/fail, duration, credits, **link to the Kane run**),
-the verdict handed to the fixer, the fixer's patch, and the final green.
+`http://localhost:4000` — stats (including Kane credits summed from every flow), and one card per cycle: the injected diff, each Kane flow (pass/fail, duration, credits, **link to the Kane run**),
+the verdict handed to the fixer, the fixer's patch (and model, when recorded), and the final green. A cycle whose after-bug verify is already green is labelled **not caught**.
 
 ## Layout
 
@@ -107,3 +140,4 @@ test/        fixer-plumbing test with a mock LLM endpoint
 - The app is intentionally small; the point is the loop, not the shop.
 - The offline `heuristic` fixer is a stand-in so the loop runs anywhere; real results should use `llm` or `cmd`.
 - Kane's result is the only oracle: the fixer is never shown which bug was injected.
+- The recorded Kane run is published as-is, including the mobile-layout injection that Kane did not catch.
