@@ -1,0 +1,20 @@
+[
+  {
+    "name": "happy-path",
+    "title": "Desktop checkout: totals and order confirmation",
+    "viewport": { "width": 1280, "height": 800 },
+    "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+  },
+  {
+    "name": "validation",
+    "title": "Desktop checkout: invalid email is rejected",
+    "viewport": { "width": 1280, "height": 800 },
+    "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+  },
+  {
+    "name": "mobile-checkout",
+    "title": "Phone-sized checkout (390x844) can be completed",
+    "viewport": { "width": 390, "height": 844 },
+    "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+  }
+]
