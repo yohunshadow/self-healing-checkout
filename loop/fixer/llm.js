@@ -29,14 +29,22 @@ module.exports = {
     const c = cfg();
     // Gemini returns transient 503 "high demand" / slow responses: try the primary model, then the
     // fallbacks in FIXER_FALLBACK_MODELS (comma-separated), two passes. The model that answered is logged.
-    const models = [c.model, ...(process.env.FIXER_FALLBACK_MODELS || '').split(',').map((x) => x.trim()).filter(Boolean)];
+    // Each target is {base, key, model}. Primary provider models first, then an optional second
+    // provider (FIXER2_BASE_URL / FIXER2_KEY_ENV / FIXER2_MODELS), e.g. NVIDIA NIM when Gemini is overloaded.
+    const split = (v) => (v || '').split(',').map((x) => x.trim()).filter(Boolean);
+    const targets = [c.model, ...split(process.env.FIXER_FALLBACK_MODELS)].map((model) => ({ base: c.base, key: c.key, model }));
+    const k2 = process.env[process.env.FIXER2_KEY_ENV || 'FIXER2_API_KEY'];
+    if (process.env.FIXER2_BASE_URL && k2) {
+      for (const model of split(process.env.FIXER2_MODELS)) targets.push({ base: process.env.FIXER2_BASE_URL.replace(/\/$/, ''), key: k2, model });
+    }
     let res, lastErr, used;
     outer: for (let pass = 0; pass < 2; pass++) {
-      for (const model of models) {
+      for (const t of targets) {
+        const model = t.model;
         try {
-          res = await fetch(`${c.base}/chat/completions`, {
+          res = await fetch(`${t.base}/chat/completions`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', ...(c.key ? { Authorization: `Bearer ${c.key}` } : {}) },
+            headers: { 'Content-Type': 'application/json', ...(t.key ? { Authorization: `Bearer ${t.key}` } : {}) },
             signal: AbortSignal.timeout(Number(process.env.FIXER_TIMEOUT_MS || 75000)),
             body: JSON.stringify({ model, temperature: 0, response_format: { type: 'json_object' }, messages: [{ role: 'user', content: buildPrompt(report, files) }] }),
           });
@@ -48,7 +56,8 @@ module.exports = {
     }
     if (!res || !res.ok) throw new Error(`fixer LLM failed: ${lastErr}`);
     const body = await res.json();
-    const out = JSON.parse(body.choices[0].message.content);
+    let txt = String(body.choices[0].message.content || '').trim().replace(/^```(?:json)?\s*/i, '').replace(/```$/, '').trim();
+    const out = JSON.parse(txt.slice(txt.indexOf('{'), txt.lastIndexOf('}') + 1));
     applyEdits(shopDir, out.edits || []);
     return { explanation: out.explanation || '', edits: (out.edits || []).map((e) => ({ file: e.file })), model: used };
   },
