@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-Healing Checkout · Kane loop</title>
+<style>
+:root{--bg:#0d1017;--card:#161b26;--line:#252c3b;--ink:#e8ecf4;--mut:#8b95a9;--red:#ff5d6c;--grn:#3ddc97;--amb:#ffc247;--blu:#6ea8ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 ui-sans-serif,system-ui,sans-serif}
+header{padding:22px 32px;border-bottom:1px solid var(--line);display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+h1{font-size:20px;margin:0}h1 small{display:block;color:var(--mut);font-weight:400;font-size:13px}
+.stats{display:flex;gap:14px;margin-left:auto;flex-wrap:wrap}.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 16px;text-align:center;min-width:92px}
+.stat b{display:block;font-size:24px}.stat span{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.banner{margin:16px 32px 0;padding:10px 14px;border-radius:8px;font-size:13px}
+.banner.warn{background:#3a2a0c;border:1px solid #7a5a14;color:var(--amb)}.banner.ok{background:#0c2d20;border:1px solid #1d6b4a;color:var(--grn)}
+.meta{margin:12px 32px 0;color:var(--mut);font-size:13px}.meta code{color:var(--ink)}
+main{padding:20px 32px 60px;max-width:1100px}
+.cycle{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:18px 0;overflow:hidden}
+.cycle>h2{margin:0;padding:14px 18px;font-size:16px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--line)}
+.pill{font-size:11px;padding:2px 9px;border-radius:99px;border:1px solid;text-transform:uppercase;letter-spacing:.05em}
+.pill.red{color:var(--red);border-color:var(--red)}.pill.grn{color:var(--grn);border-color:var(--grn)}.pill.amb{color:var(--amb);border-color:var(--amb)}.pill.blu{color:var(--blu);border-color:var(--blu)}
+.cycle h2 .end{margin-left:auto}
+.ev{display:grid;grid-template-columns:76px 28px 1fr;gap:6px;padding:10px 18px;border-top:1px solid #1d2331;animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.ev time{color:var(--mut);font-size:12px;font-variant-numeric:tabular-nums;padding-top:3px}
+.ev .dot{font-size:18px;line-height:1.3}.ev .t{font-weight:600}.ev .d{color:var(--mut);font-size:13px}
+.ev a{color:var(--blu)}
+pre{margin:8px 0 0;background:#0a0d13;border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow:auto;font:12.5px/1.45 ui-monospace,Menlo,monospace}
+.add{color:var(--grn)}.del{color:var(--red)}.hdr{color:var(--mut)}
+.run{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--amb);animation:p 1s infinite}@keyframes p{50%{opacity:.25}}
+#empty{color:var(--mut);padding:40px 0}
+</style></head><body>
+<header>
+  <h1>Self-Healing Checkout<small>breaker → Kane CLI → fixer → Kane CLI … until green</small></h1>
+  <div class="stats">
+    <div class="stat"><b id="s-inj">0</b><span>bugs injected</span></div>
+    <div class="stat"><b id="s-caught">0</b><span>caught by verifier</span></div>
+    <div class="stat"><b id="s-healed">0</b><span>healed</span></div>
+    <div class="stat"><b id="s-runs">0</b><span>verifier runs</span></div>
+  </div>
+</header>
+<div id="banner"></div><div class="meta" id="meta"></div>
+<main id="main"><div id="empty">Waiting for the first run… start it with <code>npm run demo</code>.</div></main>
+<script>
+const src = new URLSearchParams(location.search).get('src');
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+const tm = (t) => new Date(t).toLocaleTimeString([], { hour12: false });
+const diff = (d) => d ? '<pre>' + esc(d).split('\n').map((l) => l.startsWith('+ ') ? `<span class=add>${l}</span>` : l.startsWith('- ') ? `<span class=del>${l}</span>` : l.startsWith('---') || l.startsWith('+++') || l.startsWith('@@') ? `<span class=hdr>${l}</span>` : l).join('\n') + '</pre>' : '';
+const V = () => (data.meta.verifier === 'kane' ? 'Kane' : 'Stand-in');
+let data = { meta: {}, events: [] };
+
+function row(e, dot, title, desc, extra = '') {
+  return `<div class="ev"><time>${tm(e.t)}</time><span class="dot">${dot}</span><div><div class="t">${title}</div><div class="d">${desc || ''}</div>${extra}</div></div>`;
+}
+function render() {
+  const m = data.meta, ev = data.events;
+  if (!ev.length) return;
+  $('empty')?.remove();
+  $('banner').innerHTML = m.standIn
+    ? `<div class="banner warn">⚠ This run used the <b>temporary Playwright stand-in</b>, not Kane CLI. Kane-verified runs show a green banner.</div>`
+    : `<div class="banner ok">✔ Every verdict below comes from <b>Kane CLI</b> driving a real browser. Click “Kane run” to open the evidence.</div>`;
+  $('meta').innerHTML = `verifier <code>${esc(m.verifierLabel)}</code> · fixer <code>${esc(m.fixerLabel)}</code> · seed <code>${m.seed}</code>${m.finishedAt ? '' : ' · <span class="run"></span> running'}`;
+  const cycles = {};
+  ev.forEach((e) => { const c = e.cycle ?? 'x'; (cycles[c] = cycles[c] || []).push(e); });
+  const vr = ev.filter((e) => e.type === 'flow_end');
+  $('s-inj').textContent = ev.filter((e) => e.type === 'bug_injected').length;
+  $('s-caught').textContent = new Set(ev.filter((e) => e.type === 'flow_end' && !e.ok && e.cycle > 0).map((e) => e.cycle)).size;
+  $('s-healed').textContent = ev.filter((e) => e.type === 'healed').length;
+  $('s-runs').textContent = vr.length;
+  let html = '';
+  for (const [c, list] of Object.entries(cycles)) {
+    const inj = list.find((e) => e.type === 'bug_injected');
+    const done = list.some((e) => e.type === 'healed'), bad = list.some((e) => e.type === 'unhealed');
+    const title = c === '0' ? 'Baseline — is the shop green before we break it?' : `Cycle ${c} — ${esc(inj?.title || '')}`;
+    const status = c === '0' ? (list.some((e) => e.type === 'baseline_green') ? '<span class="pill grn end">green</span>' : '<span class="run end"></span>') : done ? '<span class="pill grn end">healed</span>' : bad ? '<span class="pill red end">not healed</span>' : '<span class="run end"></span>';
+    html += `<section class="cycle"><h2>${c === '0' ? '' : `<span class="pill red">${esc(inj?.category || '')}</span>`}${title}${status}</h2>`;
+    for (const e of list) {
+      if (e.type === 'bug_injected') html += row(e, '💥', 'Breaker injected a bug', `${esc(e.file)}`, diff(e.diff));
+      else if (e.type === 'flow_start') html += row(e, '🧪', `${V()} running flow: ${esc(e.flow)}`, esc(e.title));
+      else if (e.type === 'flow_end') html += row(e, e.ok ? '✅' : '❌', `${e.ok ? 'PASS' : 'FAIL'} · ${esc(e.flow)} <span style="color:var(--mut);font-weight:400">(${(e.durationMs / 1000).toFixed(1)}s${e.credits ? ', ' + e.credits + ' credits' : ''})</span>`, esc(e.summary) + (e.testUrl ? ` · <a href="${esc(e.testUrl)}" target="_blank" rel="noreferrer">Kane run ↗</a>` : ''));
+      else if (e.type === 'fixer_input') html += row(e, '📨', 'Verdict sent to the fixer agent', e.failing.map((f) => esc(f.flow + ': ' + f.summary)).join('<br>'));
+      else if (e.type === 'fix_applied') html += row(e, '🛠️', `Fixer patch (attempt ${e.attempt})`, esc(e.explanation), diff(e.diff) || '<div class="d">No change made.</div>');
+      else if (e.type === 'healed') html += row(e, '💚', 'All flows green again', 'Loop closed.');
+      else if (e.type === 'unhealed') html += row(e, '🛑', 'Fixer gave up', 'Max attempts reached; shop reset.');
+    }
+    html += '</section>';
+  }
+  if (m.summary && !m.summary.aborted) html += `<section class="cycle"><h2>Run complete <span class="pill ${m.summary.healed === m.summary.bugsInjected ? 'grn' : 'amb'} end">${m.summary.healed}/${m.summary.bugsInjected} healed</span></h2></section>`;
+  $('main').innerHTML = html;
+  if (!m.finishedAt) window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+async function tick() {
+  try { const r = await fetch(src || '/api/timeline', { cache: 'no-store' }); if (r.ok) { data = await r.json(); render(); if (src) return; } } catch {}
+  setTimeout(tick, 1000);
+}
+tick();
+</script></body></html>
