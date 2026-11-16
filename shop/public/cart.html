@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cart · Hydra Goods</title><link rel="stylesheet" href="/styles.css"></head>
+<body data-page="cart">
+<header class="site-header"><a class="brand" href="/">Hydra Goods</a>
+<nav><a href="/">Shop</a> <a id="cart-link" href="/cart">Cart (<span id="cart-count">0</span>)</a></nav></header>
+<main>
+<h1>Your cart</h1>
+<p id="cart-empty" hidden>Your cart is empty. <a href="/">Keep shopping</a></p>
+<div id="cart-body" hidden>
+  <ul id="cart-lines" class="cart-lines"></ul>
+  <dl class="totals">
+    <dt>Subtotal</dt><dd id="subtotal"></dd>
+    <dt>Shipping</dt><dd id="shipping"></dd>
+    <dt>Tax</dt><dd id="tax"></dd>
+    <dt class="grand">Order total</dt><dd id="total" class="grand"></dd>
+  </dl>
+  <a id="to-checkout" class="btn" href="/checkout">Proceed to checkout</a>
+</div>
+</main>
+<script src="/lib/pricing.js"></script><script src="/lib/validate.js"></script><script src="/app.js"></script>
+</body></html>

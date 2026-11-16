@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout · Hydra Goods</title><link rel="stylesheet" href="/styles.css"></head>
+<body data-page="checkout">
+<header class="site-header"><a class="brand" href="/">Hydra Goods</a>
+<nav><a href="/">Shop</a> <a id="cart-link" href="/cart">Cart (<span id="cart-count">0</span>)</a></nav></header>
+<main>
+<h1>Checkout</h1>
+<div class="checkout">
+  <form id="checkout-form" class="checkout-form" novalidate>
+    <label>Full name <input name="name" autocomplete="off"></label><p class="error" data-error-for="name" role="alert"></p>
+    <label>Email <input name="email" autocomplete="off"></label><p class="error" data-error-for="email" role="alert"></p>
+    <label>Street address <input name="address" autocomplete="off"></label><p class="error" data-error-for="address" role="alert"></p>
+    <label>City <input name="city" autocomplete="off"></label><p class="error" data-error-for="city" role="alert"></p>
+    <label>ZIP code <input name="zip" autocomplete="off"></label><p class="error" data-error-for="zip" role="alert"></p>
+    <label>Card number <input name="card" autocomplete="off" placeholder="4242 4242 4242 4242"></label><p class="error" data-error-for="card" role="alert"></p>
+    <p id="form-error" class="error" role="alert"></p>
+    <button id="place-order" class="btn place-order" type="submit">Place order</button>
+  </form>
+  <aside class="order-summary" aria-label="Order summary">
+    <h2>Order summary</h2>
+    <ul id="summary-lines"></ul>
+    <p>Total: <strong id="summary-total"></strong></p>
+  </aside>
+</div>
+</main>
+<script src="/lib/pricing.js"></script><script src="/lib/validate.js"></script><script src="/app.js"></script>
+</body></html>

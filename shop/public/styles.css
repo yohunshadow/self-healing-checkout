@@ -1,0 +1,27 @@
+:root { --ink:#1b1b1f; --muted:#62626b; --line:#e3e3ea; --brand:#2f5dff; --bg:#fafafc; }
+* { box-sizing: border-box; }
+body { margin:0; font:16px/1.5 system-ui, sans-serif; color:var(--ink); background:var(--bg); }
+.site-header { display:flex; justify-content:space-between; align-items:center; padding:14px 24px; background:#fff; border-bottom:1px solid var(--line); }
+.brand { font-weight:700; color:var(--ink); text-decoration:none; }
+nav a { margin-left:16px; color:var(--brand); text-decoration:none; }
+main { max-width:960px; margin:0 auto; padding:24px; }
+.products { list-style:none; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.product { background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px; }
+.price { font-weight:700; }
+.btn { display:inline-block; background:var(--brand); color:#fff; border:0; border-radius:8px; padding:10px 16px; font:inherit; cursor:pointer; text-decoration:none; }
+.cart-lines { list-style:none; padding:0; }
+.line { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); }
+.totals { display:grid; grid-template-columns:1fr auto; max-width:340px; gap:4px 16px; margin:16px 0; }
+.totals dd { margin:0; text-align:right; }
+.grand { font-weight:700; font-size:1.1em; }
+.checkout { display:grid; grid-template-columns:1fr 280px; gap:24px; align-items:start; }
+.checkout-form { max-width:520px; width:100%; background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px; }
+.checkout-form label { display:block; font-weight:600; }
+.checkout-form input { display:block; width:100%; padding:8px; margin-top:4px; border:1px solid var(--line); border-radius:6px; font:inherit; }
+.error { color:#c0262d; min-height:1.2em; margin:2px 0 8px; font-size:.9em; }
+.order-summary { background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px; }
+.success { text-align:center; padding:48px 0; }
+@media (max-width: 600px) {
+  .checkout { grid-template-columns: 1fr; }
+  main { padding:16px; }
+}

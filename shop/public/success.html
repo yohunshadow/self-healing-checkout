@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order confirmed · Hydra Goods</title><link rel="stylesheet" href="/styles.css"></head>
+<body data-page="success">
+<header class="site-header"><a class="brand" href="/">Hydra Goods</a>
+<nav><a href="/">Shop</a> <a id="cart-link" href="/cart">Cart (<span id="cart-count">0</span>)</a></nav></header>
+<main>
+<section id="success" class="success" hidden>
+  <h1>Thank you for your order!</h1>
+  <p>Order <strong id="order-number"></strong> is confirmed.</p>
+  <p>Amount charged: <strong id="order-total"></strong></p>
+  <a class="btn" href="/">Back to shop</a>
+</section>
+<p id="success-missing" hidden>No order found.</p>
+</main>
+<script src="/lib/pricing.js"></script><script src="/lib/validate.js"></script><script src="/app.js"></script>
+</body></html>
