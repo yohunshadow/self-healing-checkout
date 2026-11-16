@@ -27,16 +27,30 @@ module.exports = {
   available: () => !!cfg().key || /localhost|127\.0\.0\.1/.test(process.env.FIXER_BASE_URL || ''),
   async fix(report, files, shopDir) {
     const c = cfg();
-    const res = await fetch(`${c.base}/chat/completions`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', ...(c.key ? { Authorization: `Bearer ${c.key}` } : {}) },
-      body: JSON.stringify({ model: c.model, temperature: 0, response_format: { type: 'json_object' }, messages: [{ role: 'user', content: buildPrompt(report, files) }] }),
-    });
-    if (!res.ok) throw new Error(`fixer LLM HTTP ${res.status}`);
+    // Gemini returns transient 503 "high demand" / slow responses: try the primary model, then the
+    // fallbacks in FIXER_FALLBACK_MODELS (comma-separated), two passes. The model that answered is logged.
+    const models = [c.model, ...(process.env.FIXER_FALLBACK_MODELS || '').split(',').map((x) => x.trim()).filter(Boolean)];
+    let res, lastErr, used;
+    outer: for (let pass = 0; pass < 2; pass++) {
+      for (const model of models) {
+        try {
+          res = await fetch(`${c.base}/chat/completions`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', ...(c.key ? { Authorization: `Bearer ${c.key}` } : {}) },
+            signal: AbortSignal.timeout(Number(process.env.FIXER_TIMEOUT_MS || 75000)),
+            body: JSON.stringify({ model, temperature: 0, response_format: { type: 'json_object' }, messages: [{ role: 'user', content: buildPrompt(report, files) }] }),
+          });
+          if (res.ok) { used = model; break outer; }
+          lastErr = `${model}: HTTP ${res.status} ${(await res.text()).slice(0, 120).replace(/\s+/g, ' ')}`;
+        } catch (e) { lastErr = `${model}: ${e.message}`; res = null; }
+        await new Promise((r) => setTimeout(r, 1500));
+      }
+    }
+    if (!res || !res.ok) throw new Error(`fixer LLM failed: ${lastErr}`);
     const body = await res.json();
     const out = JSON.parse(body.choices[0].message.content);
     applyEdits(shopDir, out.edits || []);
-    return { explanation: out.explanation || '', edits: (out.edits || []).map((e) => ({ file: e.file })), model: c.model };
+    return { explanation: out.explanation || '', edits: (out.edits || []).map((e) => ({ file: e.file })), model: used };
   },
   applyEdits,
 };

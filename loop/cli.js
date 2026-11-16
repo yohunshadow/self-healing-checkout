@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Self-Healing Checkout loop:  breaker → verifier (Kane) → fixer → verifier … until green.
+require('./env');
 const fs = require('fs');
 const path = require('path');
 const { ROOT, copyDir, readTree, treeDiff, mulberry32, startShop } = require('./util');
