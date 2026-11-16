@@ -61,14 +61,28 @@ function waitForHttp(url, ms = 8000) {
   });
 }
 
-// Start the shop under test from a directory; returns {url, stop()}.
-async function startShop(dir, port) {
-  const child = spawn(process.execPath, [path.join(dir, 'server.js')], {
-    env: { ...process.env, PORT: String(port) }, stdio: 'ignore',
+const net = require('net');
+const live = new Set();
+function cleanup() { for (const c of live) { try { c.kill('SIGKILL'); } catch {} } }
+process.on('exit', cleanup);
+for (const sig of ['SIGINT', 'SIGTERM', 'SIGHUP']) process.on(sig, () => { cleanup(); process.exit(130); });
+
+function freePort(preferred) {
+  return new Promise((resolve) => {
+    const s = net.createServer();
+    s.once('error', () => { const t = net.createServer(); t.listen(0, () => { const p = t.address().port; t.close(() => resolve(p)); }); });
+    s.listen(preferred, () => s.close(() => resolve(preferred)));
   });
+}
+
+// Start the shop under test from a directory on a FREE port (a stale server from a killed run can never be reused).
+async function startShop(dir, preferredPort) {
+  const port = await freePort(preferredPort);
+  const child = spawn(process.execPath, [path.join(dir, 'server.js')], { env: { ...process.env, PORT: String(port) }, stdio: 'ignore' });
+  live.add(child);
   const url = `http://localhost:${port}`;
   await waitForHttp(url + '/');
-  return { url, stop: () => child.kill('SIGKILL') };
+  return { url, stop: () => { live.delete(child); child.kill('SIGKILL'); } };
 }
 
 module.exports = { ROOT, copyDir, readTree, treeDiff, lineDiff, mulberry32, startShop };
