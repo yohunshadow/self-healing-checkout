@@ -1,0 +1,25 @@
+{
+  "name": "self-healing-checkout",
+  "version": "0.1.0",
+  "description": "A shop that gets bugs injected on purpose, verified by Kane CLI in a real browser, and healed by a coding agent in a closed loop.",
+  "main": "shop/server.js",
+  "scripts": {
+    "start": "node shop/server.js",
+    "demo": "node loop/cli.js --serve --bugs=3",
+    "demo:standin": "node loop/cli.js --serve --verifier=playwright --bugs=3",
+    "kane:baseline": "node loop/cli.js --verifier=kane --bugs=0",
+    "replay": "node dashboard/server.js --replay",
+    "test": "node loop/cli.js --verifier=playwright --fixer=heuristic --bugs=7 --seed=1 --no-hold && node test/llm-plumbing.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "playwright-core": "^1.65.1"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,6 @@
+node_modules/
+work/
+runs/
+.testmuai/evidence/
+.env
+*.log
