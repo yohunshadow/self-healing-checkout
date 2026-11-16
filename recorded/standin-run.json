@@ -1,0 +1,796 @@
+{
+  "meta": {
+    "runId": "2026-11-16T12-15-33-823Z",
+    "verifier": "playwright-standin",
+    "verifierLabel": "Playwright (TEMPORARY STAND-IN, not Kane)",
+    "fixer": "heuristic",
+    "fixerLabel": "Heuristic playbook fixer (offline demo, NOT an LLM)",
+    "standIn": true,
+    "seed": 7,
+    "plannedBugs": 4,
+    "startedAt": "2026-11-16T12:15:33.824Z",
+    "finishedAt": "2026-11-16T12:15:57.085Z",
+    "summary": {
+      "bugsInjected": 4,
+      "caught": 4,
+      "healed": 4,
+      "fixAttempts": 4,
+      "credits": 0
+    }
+  },
+  "events": [
+    {
+      "n": 1,
+      "t": "2026-11-16T12:15:33.826Z",
+      "type": "baseline_start",
+      "cycle": 0
+    },
+    {
+      "n": 2,
+      "t": "2026-11-16T12:15:33.949Z",
+      "type": "verify_start",
+      "cycle": 0,
+      "label": "baseline",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 3,
+      "t": "2026-11-16T12:15:33.949Z",
+      "type": "flow_start",
+      "cycle": 0,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 4,
+      "t": "2026-11-16T12:15:34.661Z",
+      "type": "flow_end",
+      "cycle": 0,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 646
+    },
+    {
+      "n": 5,
+      "t": "2026-11-16T12:15:34.661Z",
+      "type": "flow_start",
+      "cycle": 0,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 6,
+      "t": "2026-11-16T12:15:35.784Z",
+      "type": "flow_end",
+      "cycle": 0,
+      "flow": "validation",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 1033
+    },
+    {
+      "n": 7,
+      "t": "2026-11-16T12:15:35.784Z",
+      "type": "flow_start",
+      "cycle": 0,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 8,
+      "t": "2026-11-16T12:15:36.324Z",
+      "type": "flow_end",
+      "cycle": 0,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 479
+    },
+    {
+      "n": 9,
+      "t": "2026-11-16T12:15:36.324Z",
+      "type": "verify_result",
+      "cycle": 0,
+      "label": "baseline",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 10,
+      "t": "2026-11-16T12:15:36.325Z",
+      "type": "baseline_green",
+      "cycle": 0
+    },
+    {
+      "n": 11,
+      "t": "2026-11-16T12:15:36.325Z",
+      "type": "bug_injected",
+      "cycle": 1,
+      "bugId": "place-order-dead",
+      "category": "broken button",
+      "title": "\"Place order\" button stopped submitting the form",
+      "file": "public/checkout.html",
+      "diff": "--- a/public/checkout.html\n+++ b/public/checkout.html\n@@ line 18 @@\n      <p id=\"form-error\" class=\"error\" role=\"alert\"></p>\n-     <button id=\"place-order\" class=\"btn place-order\" type=\"submit\">Place order</button>\n+     <button id=\"place-order\" class=\"btn place-order\" type=\"button\">Place order</button>"
+    },
+    {
+      "n": 12,
+      "t": "2026-11-16T12:15:36.438Z",
+      "type": "verify_start",
+      "cycle": 1,
+      "label": "after-bug",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 13,
+      "t": "2026-11-16T12:15:36.438Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 14,
+      "t": "2026-11-16T12:15:39.553Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "happy-path",
+      "ok": false,
+      "summary": "After clicking Place order the page still shows the Checkout form, no 'Thank you for your order!' confirmation.",
+      "reason": "Scripted check failed",
+      "durationMs": 3048
+    },
+    {
+      "n": 15,
+      "t": "2026-11-16T12:15:39.553Z",
+      "type": "verify_result",
+      "cycle": 1,
+      "label": "after-bug",
+      "ok": false,
+      "failing": [
+        "happy-path"
+      ]
+    },
+    {
+      "n": 16,
+      "t": "2026-11-16T12:15:39.553Z",
+      "type": "fixer_input",
+      "cycle": 1,
+      "attempt": 1,
+      "failing": [
+        {
+          "flow": "happy-path",
+          "summary": "After clicking Place order the page still shows the Checkout form, no 'Thank you for your order!' confirmation.",
+          "reason": "Scripted check failed"
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "t": "2026-11-16T12:15:39.554Z",
+      "type": "fix_applied",
+      "cycle": 1,
+      "attempt": 1,
+      "explanation": "Pattern match on failing flow text → reverted: \"Place order\" button stopped submitting the form",
+      "diff": "--- a/public/checkout.html\n+++ b/public/checkout.html\n@@ line 18 @@\n      <p id=\"form-error\" class=\"error\" role=\"alert\"></p>\n-     <button id=\"place-order\" class=\"btn place-order\" type=\"button\">Place order</button>\n+     <button id=\"place-order\" class=\"btn place-order\" type=\"submit\">Place order</button>",
+      "changed": true
+    },
+    {
+      "n": 18,
+      "t": "2026-11-16T12:15:39.665Z",
+      "type": "verify_start",
+      "cycle": 1,
+      "label": "after-fix-1",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 19,
+      "t": "2026-11-16T12:15:39.666Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 20,
+      "t": "2026-11-16T12:15:40.287Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 556
+    },
+    {
+      "n": 21,
+      "t": "2026-11-16T12:15:40.287Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 22,
+      "t": "2026-11-16T12:15:41.385Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "validation",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 1037
+    },
+    {
+      "n": 23,
+      "t": "2026-11-16T12:15:41.386Z",
+      "type": "flow_start",
+      "cycle": 1,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 24,
+      "t": "2026-11-16T12:15:41.980Z",
+      "type": "flow_end",
+      "cycle": 1,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 522
+    },
+    {
+      "n": 25,
+      "t": "2026-11-16T12:15:41.980Z",
+      "type": "verify_result",
+      "cycle": 1,
+      "label": "after-fix-1",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 26,
+      "t": "2026-11-16T12:15:41.981Z",
+      "type": "healed",
+      "cycle": 1,
+      "bugId": "place-order-dead"
+    },
+    {
+      "n": 27,
+      "t": "2026-11-16T12:15:41.981Z",
+      "type": "bug_injected",
+      "cycle": 2,
+      "bugId": "total-ignores-quantity",
+      "category": "wrong total",
+      "title": "Subtotal ignores item quantity",
+      "file": "lib/pricing.js",
+      "diff": "--- a/lib/pricing.js\n+++ b/lib/pricing.js\n@@ line 18 @@\n      for (const item of items) {\n-       subtotal += item.price * item.qty;\n+       subtotal += item.price;"
+    },
+    {
+      "n": 28,
+      "t": "2026-11-16T12:15:42.092Z",
+      "type": "verify_start",
+      "cycle": 2,
+      "label": "after-bug",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 29,
+      "t": "2026-11-16T12:15:42.093Z",
+      "type": "flow_start",
+      "cycle": 2,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 30,
+      "t": "2026-11-16T12:15:42.584Z",
+      "type": "flow_end",
+      "cycle": 2,
+      "flow": "happy-path",
+      "ok": false,
+      "summary": "Cart shows subtotal $30.50 but expected $42.50 (Order total shows $38.55, expected $51.75)",
+      "reason": "Scripted check failed",
+      "durationMs": 426
+    },
+    {
+      "n": 31,
+      "t": "2026-11-16T12:15:42.584Z",
+      "type": "verify_result",
+      "cycle": 2,
+      "label": "after-bug",
+      "ok": false,
+      "failing": [
+        "happy-path"
+      ]
+    },
+    {
+      "n": 32,
+      "t": "2026-11-16T12:15:42.584Z",
+      "type": "fixer_input",
+      "cycle": 2,
+      "attempt": 1,
+      "failing": [
+        {
+          "flow": "happy-path",
+          "summary": "Cart shows subtotal $30.50 but expected $42.50 (Order total shows $38.55, expected $51.75)",
+          "reason": "Scripted check failed"
+        }
+      ]
+    },
+    {
+      "n": 33,
+      "t": "2026-11-16T12:15:42.585Z",
+      "type": "fix_applied",
+      "cycle": 2,
+      "attempt": 1,
+      "explanation": "Pattern match on failing flow text → reverted: Subtotal ignores item quantity",
+      "diff": "--- a/lib/pricing.js\n+++ b/lib/pricing.js\n@@ line 18 @@\n      for (const item of items) {\n-       subtotal += item.price;\n+       subtotal += item.price * item.qty;",
+      "changed": true
+    },
+    {
+      "n": 34,
+      "t": "2026-11-16T12:15:42.696Z",
+      "type": "verify_start",
+      "cycle": 2,
+      "label": "after-fix-1",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 35,
+      "t": "2026-11-16T12:15:42.697Z",
+      "type": "flow_start",
+      "cycle": 2,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 36,
+      "t": "2026-11-16T12:15:43.371Z",
+      "type": "flow_end",
+      "cycle": 2,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 612
+    },
+    {
+      "n": 37,
+      "t": "2026-11-16T12:15:43.371Z",
+      "type": "flow_start",
+      "cycle": 2,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 38,
+      "t": "2026-11-16T12:15:44.408Z",
+      "type": "flow_end",
+      "cycle": 2,
+      "flow": "validation",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 985
+    },
+    {
+      "n": 39,
+      "t": "2026-11-16T12:15:44.408Z",
+      "type": "flow_start",
+      "cycle": 2,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 40,
+      "t": "2026-11-16T12:15:44.956Z",
+      "type": "flow_end",
+      "cycle": 2,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 502
+    },
+    {
+      "n": 41,
+      "t": "2026-11-16T12:15:44.957Z",
+      "type": "verify_result",
+      "cycle": 2,
+      "label": "after-fix-1",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 42,
+      "t": "2026-11-16T12:15:44.957Z",
+      "type": "healed",
+      "cycle": 2,
+      "bugId": "total-ignores-quantity"
+    },
+    {
+      "n": 43,
+      "t": "2026-11-16T12:15:44.957Z",
+      "type": "bug_injected",
+      "cycle": 3,
+      "bugId": "mobile-summary-overlay",
+      "category": "mobile layout bug",
+      "title": "On phones, the order summary is pinned over the Place order button",
+      "file": "public/styles.css",
+      "diff": "--- a/public/styles.css\n+++ b/public/styles.css\n@@ line 26 @@\n    .checkout { grid-template-columns: 1fr; }\n+   .order-summary { position: fixed; left: 0; right: 0; bottom: 0; height: 55vh; z-index: 10; }"
+    },
+    {
+      "n": 44,
+      "t": "2026-11-16T12:15:45.070Z",
+      "type": "verify_start",
+      "cycle": 3,
+      "label": "after-bug",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 45,
+      "t": "2026-11-16T12:15:45.070Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 46,
+      "t": "2026-11-16T12:15:45.673Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 554
+    },
+    {
+      "n": 47,
+      "t": "2026-11-16T12:15:45.674Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 48,
+      "t": "2026-11-16T12:15:46.744Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "validation",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 999
+    },
+    {
+      "n": 49,
+      "t": "2026-11-16T12:15:46.744Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 50,
+      "t": "2026-11-16T12:15:50.236Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "mobile-checkout",
+      "ok": false,
+      "summary": "The 'Place order' button cannot be clicked on a 390px-wide phone screen: it is covered by another element (      - <aside class=\"order-summary\" aria-label=\"Order summary\">…</aside> intercepts pointer events)",
+      "reason": "Scripted check failed",
+      "durationMs": 3402
+    },
+    {
+      "n": 51,
+      "t": "2026-11-16T12:15:50.236Z",
+      "type": "verify_result",
+      "cycle": 3,
+      "label": "after-bug",
+      "ok": false,
+      "failing": [
+        "mobile-checkout"
+      ]
+    },
+    {
+      "n": 52,
+      "t": "2026-11-16T12:15:50.237Z",
+      "type": "fixer_input",
+      "cycle": 3,
+      "attempt": 1,
+      "failing": [
+        {
+          "flow": "mobile-checkout",
+          "summary": "The 'Place order' button cannot be clicked on a 390px-wide phone screen: it is covered by another element (      - <aside class=\"order-summary\" aria-label=\"Order summary\">…</aside> intercepts pointer events)",
+          "reason": "Scripted check failed"
+        }
+      ]
+    },
+    {
+      "n": 53,
+      "t": "2026-11-16T12:15:50.237Z",
+      "type": "fix_applied",
+      "cycle": 3,
+      "attempt": 1,
+      "explanation": "Pattern match on failing flow text → reverted: On phones, the order summary is pinned over the Place order button",
+      "diff": "--- a/public/styles.css\n+++ b/public/styles.css\n@@ line 26 @@\n    .checkout { grid-template-columns: 1fr; }\n-   .order-summary { position: fixed; left: 0; right: 0; bottom: 0; height: 55vh; z-index: 10; }",
+      "changed": true
+    },
+    {
+      "n": 54,
+      "t": "2026-11-16T12:15:50.349Z",
+      "type": "verify_start",
+      "cycle": 3,
+      "label": "after-fix-1",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 55,
+      "t": "2026-11-16T12:15:50.349Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 56,
+      "t": "2026-11-16T12:15:50.994Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 576
+    },
+    {
+      "n": 57,
+      "t": "2026-11-16T12:15:50.995Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 58,
+      "t": "2026-11-16T12:15:52.116Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "validation",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 1047
+    },
+    {
+      "n": 59,
+      "t": "2026-11-16T12:15:52.117Z",
+      "type": "flow_start",
+      "cycle": 3,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 60,
+      "t": "2026-11-16T12:15:52.696Z",
+      "type": "flow_end",
+      "cycle": 3,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 513
+    },
+    {
+      "n": 61,
+      "t": "2026-11-16T12:15:52.697Z",
+      "type": "verify_result",
+      "cycle": 3,
+      "label": "after-fix-1",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 62,
+      "t": "2026-11-16T12:15:52.697Z",
+      "type": "healed",
+      "cycle": 3,
+      "bugId": "mobile-summary-overlay"
+    },
+    {
+      "n": 63,
+      "t": "2026-11-16T12:15:52.698Z",
+      "type": "bug_injected",
+      "cycle": 4,
+      "bugId": "email-accepts-anything",
+      "category": "validation regression",
+      "title": "Email validation accepts any string",
+      "file": "lib/validate.js",
+      "diff": "--- a/lib/validate.js\n+++ b/lib/validate.js\n@@ line 6 @@\n  })(typeof self !== 'undefined' ? self : this, function () {\n-   const EMAIL_RE = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;\n+   const EMAIL_RE = /.*/;"
+    },
+    {
+      "n": 64,
+      "t": "2026-11-16T12:15:52.807Z",
+      "type": "verify_start",
+      "cycle": 4,
+      "label": "after-bug",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 65,
+      "t": "2026-11-16T12:15:52.808Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 66,
+      "t": "2026-11-16T12:15:53.493Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 621
+    },
+    {
+      "n": 67,
+      "t": "2026-11-16T12:15:53.493Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 68,
+      "t": "2026-11-16T12:15:54.601Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "validation",
+      "ok": false,
+      "summary": "Invalid email 'not-an-email' was accepted: the page shows 'Thank you for your order!' instead of an email error",
+      "reason": "Scripted check failed",
+      "durationMs": 1026
+    },
+    {
+      "n": 69,
+      "t": "2026-11-16T12:15:54.601Z",
+      "type": "verify_result",
+      "cycle": 4,
+      "label": "after-bug",
+      "ok": false,
+      "failing": [
+        "validation"
+      ]
+    },
+    {
+      "n": 70,
+      "t": "2026-11-16T12:15:54.601Z",
+      "type": "fixer_input",
+      "cycle": 4,
+      "attempt": 1,
+      "failing": [
+        {
+          "flow": "validation",
+          "summary": "Invalid email 'not-an-email' was accepted: the page shows 'Thank you for your order!' instead of an email error",
+          "reason": "Scripted check failed"
+        }
+      ]
+    },
+    {
+      "n": 71,
+      "t": "2026-11-16T12:15:54.602Z",
+      "type": "fix_applied",
+      "cycle": 4,
+      "attempt": 1,
+      "explanation": "Pattern match on failing flow text → reverted: Email validation accepts any string",
+      "diff": "--- a/lib/validate.js\n+++ b/lib/validate.js\n@@ line 6 @@\n  })(typeof self !== 'undefined' ? self : this, function () {\n-   const EMAIL_RE = /.*/;\n+   const EMAIL_RE = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;",
+      "changed": true
+    },
+    {
+      "n": 72,
+      "t": "2026-11-16T12:15:54.715Z",
+      "type": "verify_start",
+      "cycle": 4,
+      "label": "after-fix-1",
+      "verifier": "playwright-standin"
+    },
+    {
+      "n": 73,
+      "t": "2026-11-16T12:15:54.716Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "happy-path",
+      "title": "Desktop checkout: totals and order confirmation",
+      "objective": "On the shop home page click the button 'Add to cart: Ceramic Mug' twice and 'Add to cart: Canvas Tote' once. Open the Cart page. Verify the cart shows Subtotal $42.50, Shipping $5.00, Tax $4.25 and Order total $51.75. Click 'Proceed to checkout'. Fill the form: Full name 'Ada Lovelace', Email 'ada@example.com', Street address '12 Analytical St', City 'Cambridge', ZIP code '02139', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify the page now says 'Thank you for your order!' with an order number and 'Amount charged: $51.75'."
+    },
+    {
+      "n": 74,
+      "t": "2026-11-16T12:15:55.364Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "happy-path",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 575
+    },
+    {
+      "n": 75,
+      "t": "2026-11-16T12:15:55.364Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "validation",
+      "title": "Desktop checkout: invalid email is rejected",
+      "objective": "On the shop home page click 'Add to cart: Sticker Pack' once, open the Cart page and click 'Proceed to checkout'. Fill the form with Full name 'Grace Hopper', Email 'not-an-email', Street address '1 Navy Way', City 'Arlington', ZIP code '22202', Card number '4242 4242 4242 4242'. Click 'Place order'. Verify an error message 'Please enter a valid email address.' is shown next to the Email field and that the page still shows the Checkout form (it must NOT show 'Thank you for your order!')."
+    },
+    {
+      "n": 76,
+      "t": "2026-11-16T12:15:56.444Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "validation",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 1011
+    },
+    {
+      "n": 77,
+      "t": "2026-11-16T12:15:56.444Z",
+      "type": "flow_start",
+      "cycle": 4,
+      "flow": "mobile-checkout",
+      "title": "Phone-sized checkout (390x844) can be completed",
+      "objective": "On the shop home page click 'Add to cart: Canvas Tote' once, open the Cart page and click 'Proceed to checkout'. Fill the form: Full name 'Alan Turing', Email 'alan@example.com', Street address '3 Bletchley Rd', City 'Milton Keynes', ZIP code '10001', Card number '4242 4242 4242 4242'. Scroll down to the 'Place order' button and click it like a real user on a phone would (nothing may cover it). Verify the page says 'Thank you for your order!' with 'Amount charged: $25.35'."
+    },
+    {
+      "n": 78,
+      "t": "2026-11-16T12:15:57.083Z",
+      "type": "flow_end",
+      "cycle": 4,
+      "flow": "mobile-checkout",
+      "ok": true,
+      "summary": "All checks passed",
+      "durationMs": 569
+    },
+    {
+      "n": 79,
+      "t": "2026-11-16T12:15:57.084Z",
+      "type": "verify_result",
+      "cycle": 4,
+      "label": "after-fix-1",
+      "ok": true,
+      "failing": []
+    },
+    {
+      "n": 80,
+      "t": "2026-11-16T12:15:57.084Z",
+      "type": "healed",
+      "cycle": 4,
+      "bugId": "email-accepts-anything"
+    },
+    {
+      "n": 81,
+      "t": "2026-11-16T12:15:57.085Z",
+      "type": "run_end",
+      "bugsInjected": 4,
+      "caught": 4,
+      "healed": 4,
+      "fixAttempts": 4,
+      "credits": 0
+    }
+  ]
+}
