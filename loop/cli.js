@@ -48,12 +48,12 @@ async function main() {
   let pool = mutations.filter((m) => !opt.only || opt.only.includes(m.id));
   const order = []; while (order.length < opt.bugs && pool.length) order.push(pool.splice(Math.floor(rnd() * pool.length), 1)[0]);
 
-  async function runVerify(label, cycle) {
+  async function runVerify(label, cycle, first = []) {
     const shop = await startShop(work, opt.shopPort);
     try {
       tl.add('verify_start', { cycle, label, verifier: verifier.id });
       const rep = await verifierMod.verify(verifier, shop.url, {
-        failFast: true,
+        failFast: true, first,
         onFlow: (e) => {
           if (e.phase === 'start') { log(c.dim(`    ▸ ${e.flow.name}: ${e.flow.title}`)); tl.add('flow_start', { cycle, flow: e.flow.name, title: e.flow.title, objective: e.flow.objective }); }
           else { const r = e.result; log(`    ${r.ok ? c.green('✔ pass') : c.red('✘ FAIL')} ${e.flow.name} ${c.dim(`(${(r.durationMs / 1000).toFixed(1)}s)`)}${r.ok ? '' : '\n      ' + r.summary}`); tl.add('flow_end', { cycle, flow: e.flow.name, ok: r.ok, summary: r.summary, reason: r.reason, testUrl: r.testUrl, credits: r.credits, durationMs: r.durationMs }); }
@@ -82,11 +82,12 @@ async function main() {
     fs.writeFileSync(file, before.replace(m.good, m.bad));
     tl.add('bug_injected', { cycle, bugId: m.id, category: m.category, title: m.title, file: m.file, diff: treeDiff({ [m.file]: before }, { [m.file]: fs.readFileSync(file, 'utf8') }) });
 
-    let green = false;
+    let green = false, lastFailing = [];
     for (let attempt = 1; attempt <= opt.maxFix + 1; attempt++) {
-      const rep = await runVerify(attempt === 1 ? 'after-bug' : `after-fix-${attempt - 1}`, cycle);
+      const rep = await runVerify(attempt === 1 ? 'after-bug' : `after-fix-${attempt - 1}`, cycle, lastFailing);
       rep.results.forEach((r) => (credits += r.credits || 0));
       if (rep.ok) { green = true; break; }
+      lastFailing = rep.results.filter((r) => !r.ok).map((r) => r.name);
       if (attempt === 1) caught++;
       if (attempt > opt.maxFix) break;
       log(c.dim(`    → feeding verdict to fixer (${fixer.id}), attempt ${attempt}`));

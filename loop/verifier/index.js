@@ -10,9 +10,11 @@ async function pick(name) {
 }
 
 // Runs flows sequentially. failFast stops at the first red flow (tighter loop).
-async function verify(verifier, baseUrl, { failFast = true, onFlow } = {}) {
+async function verify(verifier, baseUrl, { failFast = true, onFlow, first = [] } = {}) {
   const results = [];
-  for (const flow of flows) {
+  // after a fix, re-run the flows that were red first: tighter loop, same final guarantee (all flows must pass)
+  const ordered = [...flows].sort((a, b) => (first.includes(b.name) ? 1 : 0) - (first.includes(a.name) ? 1 : 0));
+  for (const flow of ordered) {
     onFlow && onFlow({ phase: 'start', flow });
     const r = await verifier.runFlow(flow, baseUrl);
     results.push(r);
