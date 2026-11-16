@@ -23,7 +23,7 @@ function runFlow(flow, baseUrl) {
   setWindow(flow.viewport);
   const t0 = Date.now();
   return new Promise((resolve) => {
-    const args = ['run', flow.objective, '--url', baseUrl + '/', '--agent', '--headless',
+    const args = ['run', flow.objective, '--url', baseUrl + '/', '--agent', ...(process.env.KANE_HEADED ? [] : ['--headless']),
       '--max-steps', String(process.env.KANE_MAX_STEPS || 40), '--timeout', String(FLOW_TIMEOUT_S),
       '--local-context', '.testmuai/context.md', '--final-validation', 'on',
       ...(process.env.KANE_EXTRA_ARGS ? process.env.KANE_EXTRA_ARGS.split(' ') : [])];
